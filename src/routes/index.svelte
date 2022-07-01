@@ -1,14 +1,16 @@
 
 <script>
     import Monaco from "$lib/Monaco.svelte";
-    let editors=new Array(12);
+    import Markdown from "$lib/Markdown.svelte";
+    let editors=new Array(13);
     let dirty = false;
     
     function handleChanged(){
         dirty = true;
     }
     function handleSave(){
-        for(let i=0;i<12;++i){
+        for(let i=0;i<13;++i){
+          
             editors[i].save();
         }
 
@@ -19,6 +21,7 @@
 {#if dirty}
 <div class="savebutton"><button class='button-7' on:click={handleSave}>Save</button></div>
 {/if}
+<Markdown bind:this={editors[12]} on:changed={handleChanged}></Markdown>
 <Monaco bind:this={editors[0]} text="SELECT * FROM TABLE1" on:changed={handleChanged}></Monaco>
 <Monaco bind:this={editors[1]}  on:changed={handleChanged}></Monaco>
 <Monaco bind:this={editors[2]}  on:changed={handleChanged}></Monaco>
