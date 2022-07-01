@@ -2,7 +2,15 @@
 <script>
 
 import { onMount } from 'svelte';
+import { createEventDispatcher } from 'svelte';
+
+const dispatch = createEventDispatcher();
+
+
 export let text;
+export const save=()=>{
+    
+}
 let div;
 onMount( async ()=>{
 let monaco=await import('monaco-editor');    
@@ -13,16 +21,18 @@ let editor = monaco.editor.create(div, {
             automaticLayout: true,
             scrollBeyondLastLine: false
     });
-    const contentHeight = editor.getModel().getLineCount() * 19 ;
-    
-    div.style.height=32+contentHeight+'px';
-    editor.layout();
+    recalcHeight(editor,div);
     editor.getModel().onDidChangeContent((event) => {
-                const contentHeight = editor.getModel().getLineCount() * 19 ;
-                div.style.height=32+contentHeight+'px';
-                editor.layout();
+                recalcHeight(editor,div);
+                dispatch('changed');
+               
             });
 });
+let recalcHeight=(editor,div)=>{
+    const contentHeight = editor.getModel().getLineCount() * 19 ;
+    div.style.height=32+contentHeight+'px';
+    editor.layout();
+}
 </script>
 <div class="monacocontainer" bind:this={div}>
     

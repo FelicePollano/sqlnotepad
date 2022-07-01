@@ -3,5 +3,7 @@
 body
 {
     font-family: 'Noto Sans';
-    text-align: center;
+  
+    padding-left: 42px;
+    padding-right: 42px;
 }
